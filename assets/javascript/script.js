@@ -2,7 +2,7 @@ var currentDate = $("#currentDay");
 var currentTime = moment().format("hh:mm a");
 var saveButton = $(".save");
 
-var hoursArray = []
+var hoursArray = [];
 
 
 
@@ -16,9 +16,27 @@ $(".container").on("click", ".save", function(event){
     var buttonNumber = $(this).attr("data-time");
     console.log(this);
     console.log(buttonNumber);
-    
+
+    var userInput = $("#input" + buttonNumber).val();
+
+    hoursArray.push(buttonNumber);
+    console.log(hoursArray);
+
     var buttonJSON = JSON.stringify(buttonNumber);
     localStorage.setItem("buttonNum", buttonJSON);
+
+    var inputJSON = JSON.stringify(userInput);
+    localStorage.setItem("userInput", inputJSON);
+
+    for (var i = 0; i < hoursArray.length; i++) {
+        console.log(i);
+        console.log(hoursArray[i]);
+        var pulledButton = localStorage.getItem("buttonNum");
+        pulledButton = JSON.parse(pulledButton);
+        console.log(pulledButton);
+        
+    }
+
 });
 
 console.log(currentTime);
