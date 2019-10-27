@@ -13,4 +13,4 @@ Near the top of the calendar, the application displays the current day. Addition
 
 Active site: "https://alicelouiserussell.github.io/Day-Planner/"
 
-![IMAGE](Planner.PNG)
+![Image] (/assets/Planner.PNG)
