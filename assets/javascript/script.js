@@ -3,30 +3,40 @@ var currentHour = moment().format("HH");
 var saveButton = $(".save");
 
 var hoursArray = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-
-
+var plansArray = [];
 
 currentDate.text(moment().format("dddd, MMMM Do YYYY"));
 
 $(document).ready(function() {
+    renderSavedPlans();
     for (var i = 0; i < hoursArray.length; i++) {
         var hour = parseInt(hoursArray[i]);
         var time = parseInt(currentHour);
 
-        console.log(time);
-        console.log(hour);
         if (hour === time){
-           $(".hour" + hour).addClass("bg-success");
-           console.log(hour === time);
+           $(".hour" + hour).addClass("bg-muted border-warning");
         } else if (hour < time){
-            $(".hour" + hour).addClass("bg-light");
-            console.log(hour < time);
+            $(".hour" + hour).addClass("bg-secondary");
         } else if (hour > time) {
-            $(".hour" + hour).addClass("bg-primary")
+            $(".hour" + hour).addClass("bg-success")
         };
     };
-
 });
+
+function renderSavedPlans(){
+    var pulledPlans = localStorage.getItem("plans");
+        pulledPlans= JSON.parse(pulledPlans); 
+        console.log(pulledPlans);
+        
+    pulledPlans.forEach(function(plan){
+        console.log(plan.hour);
+        console.log(plan.plans);
+        console.log($("#input" + plan.hour));
+        var setHour = $("#input" + plan.hour);
+        setHour.empty();
+        setHour.append(plan.plans);
+    });
+};
 
 $(".container").on("click", ".save", function(event){
     event.preventDefault();
@@ -36,40 +46,15 @@ $(".container").on("click", ".save", function(event){
     console.log(buttonNumber);
 
     var userInput = $("#input" + buttonNumber).val();
+    console.log(userInput);
 
-    hoursArray.push(buttonNumber);
-    console.log(hoursArray);
+    plansArray.push({hour: buttonNumber, plans: userInput});
+    console.log(plansArray);
 
-    var buttonJSON = JSON.stringify(buttonNumber);
-    localStorage.setItem("buttonNum", buttonJSON);
-
-    var inputJSON = JSON.stringify(userInput);
-    localStorage.setItem("userInput", inputJSON);
-
-    for (var i = 0; i < hoursArray.length; i++) {
-        console.log(i);
-        console.log(hoursArray[i]);
-        var pulledButton = localStorage.getItem("buttonNum");
-        pulledButton = JSON.parse(pulledButton);
-        console.log(pulledButton);
-        
-    }
+    var plansJSON = JSON.stringify(plansArray);
+    localStorage.setItem("plans", plansJSON);
 });
 
-
-
-// user clicks "save"
-    // grab information from user:
-            // 1. input text
-            // 2. hour of input (data-time)
-    // save information locally
-
-
-
-// page loads
-    // function displays stored information on page
-        // pulls from local storage 
-        // appends to page 
 
 
 
